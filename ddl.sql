@@ -14,12 +14,7 @@ create table sorteio (
 
 create table sorteio_participante (
     id int(11) not null primary key  auto_increment,
-    id_participante int(11) not null,
-     constraint fk_id_participante
-        foreign key (id_participante) references participante (id),
-    id_sorteio int(11) not null,
-     constraint fk_id_sorteio
-        foreign key (id_sorteio) references sorteio (id)
+    id_participante int(11) not null
 );
 
 create table sorteio_participante_resultado
@@ -28,18 +23,8 @@ create table sorteio_participante_resultado
         primary key,
     id_sorteio           int not null,
     id_participante_de   int not null,
-    id_participante_para int not null,
-    constraint fk_id_sorteio_resultado
-        foreign key (id_sorteio) references sorteio (id),
-    constraint fk_id_participante_para
-        foreign key (id_participante_para) references participante (id),
-    constraint fk_id_participante_de
-        foreign key (id_participante_de) references participante (id)
+    id_participante_para int not null
 );
-
-create index fk_id_participante_para
-    on sorteio_participante_resultado (id_sorteio);
-
 
 
 INSERT INTO amigosecreto.participante (id, nome, email) VALUES (1, 'Marcio', 'marcio1991@gmail.com');
