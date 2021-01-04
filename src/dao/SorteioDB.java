@@ -61,6 +61,18 @@ public class SorteioDB {
         }
     }
     
+    public void deleteAll() {
+        String sql = "delete from sorteio";
+        PreparedStatement ps;
+        
+        try {
+            ps = DB.getConnection().prepareStatement(sql);
+            ps.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(SorteioDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public Sorteio selectOne(int id) {
         String sql = "select * from sorteio where id = ?";
         PreparedStatement ps;
@@ -105,5 +117,25 @@ public class SorteioDB {
         }
         
         return sorteios;
+    }
+    
+    public int count() {
+        String sql = "select count(*) as count from sorteio";
+        PreparedStatement ps;
+        int count = 0;
+        
+        try {
+             ps = DB.getConnection().prepareStatement(sql);
+             ResultSet results = ps.executeQuery();
+             
+             while (results.next()) {
+                 count = results.getInt("count");
+             }
+             
+        } catch (SQLException ex) {
+            Logger.getLogger(SorteioDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return count;
     }
 }

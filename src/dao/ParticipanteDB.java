@@ -62,6 +62,18 @@ public class ParticipanteDB {
         }
     }
     
+    public void deleteAll() {
+        String sql = "delete from participante";
+        PreparedStatement ps;
+        
+        try {
+            ps = DB.getConnection().prepareStatement(sql);
+            ps.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(ParticipanteDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public Participante selectOne(int id) {
         String sql = "select * from participante where id = ?";
         PreparedStatement ps;
@@ -107,5 +119,25 @@ public class ParticipanteDB {
         }
         
         return participantes;
+    }
+   
+    public int count() {
+        String sql = "select count(*) as count from participante";
+        PreparedStatement ps;
+        int count = 0;
+        
+        try {
+             ps = DB.getConnection().prepareStatement(sql);
+             ResultSet results = ps.executeQuery();
+             
+             while (results.next()) {
+                 count = results.getInt("count");
+             }
+             
+        } catch (SQLException ex) {
+            Logger.getLogger(SorteioDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return count;
     }
 }
