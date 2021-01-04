@@ -49,6 +49,11 @@ public class Main extends javax.swing.JFrame {
         });
 
         JSorteios.setText("Listar sorteios");
+        JSorteios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JSorteiosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -95,6 +100,13 @@ public class Main extends javax.swing.JFrame {
         listPart.setLocationRelativeTo(this);
         listPart.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_JParticipantesActionPerformed
+
+    private void JSorteiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JSorteiosActionPerformed
+        ListSorteios listSorteio = new ListSorteios();
+        listSorteio.setVisible(true);
+        listSorteio.setLocationRelativeTo(this);
+        listSorteio.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }//GEN-LAST:event_JSorteiosActionPerformed
 
     /**
      * @param args the command line arguments

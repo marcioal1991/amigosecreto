@@ -20,18 +20,24 @@ import model.Sorteio;
  * @author marcio
  */
 public class SorteioDB {
-     public void insert(Sorteio sorteio) {
+     public int insert(Sorteio sorteio) {
         
         String sql = "insert into sorteio(nome) values (?)";
         PreparedStatement ps;
-        
+        int auto_id = 0;
         try {
-            ps = DB.getConnection().prepareStatement(sql);
+            ps = DB.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, sorteio.getNome());
-            ps.execute();
+            ps.executeUpdate();
+            
+             ResultSet rs = ps.getGeneratedKeys();
+            rs.next();
+            auto_id = rs.getInt(1);
         } catch (SQLException ex) {
             Logger.getLogger(SorteioDB.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        return auto_id;
     }
     
     public void update(Sorteio sorteio) {

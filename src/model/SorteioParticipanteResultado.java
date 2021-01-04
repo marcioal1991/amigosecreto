@@ -28,7 +28,7 @@ public class SorteioParticipanteResultado {
     }
     
     public void setIdParticipantePara(int id) {
-        this.id_participante_de = id;
+        this.id_participante_para = id;
     }
     
     public void setIdSorteio(int id) {

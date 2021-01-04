@@ -21,7 +21,7 @@ import javax.swing.table.TableColumnModel;
  *
  * @author marcio
  */
-class ButtonColumnParticipante extends AbstractCellEditor
+class ButtonColumnPerformSorteio extends AbstractCellEditor
 implements TableCellRenderer, TableCellEditor, ActionListener
 {
     JTable table;
@@ -30,16 +30,15 @@ implements TableCellRenderer, TableCellEditor, ActionListener
     String text;
     int id;
 
-    public ButtonColumnParticipante(JTable table, int column, int id)
+    public ButtonColumnPerformSorteio(JTable table, int column, int id)
     {
         super();
         this.table = table;
-        this.id = id;
         renderButton = new JButton();
+
         editButton = new JButton();
         editButton.setFocusPainted( false );
-        editButton.addActionListener( this );
-       
+        editButton.addActionListener( this );;
         TableColumnModel columnModel = table.getColumnModel();
         columnModel.getColumn(column).setCellRenderer( this );
         columnModel.getColumn(column).setCellEditor( this );
@@ -64,14 +63,14 @@ implements TableCellRenderer, TableCellEditor, ActionListener
             renderButton.setBackground(UIManager.getColor("Button.background"));
         }
 
-        renderButton.setText("Atualizar");
+        renderButton.setText("Sortear");
         return renderButton;
     }
 
     public Component getTableCellEditorComponent(
         JTable table, Object value, boolean isSelected, int row, int column)
     {
-        editButton.setText("Atualizar");
+        editButton.setText("Sortear");
         return editButton;
     }
 
@@ -84,7 +83,7 @@ implements TableCellRenderer, TableCellEditor, ActionListener
     {
         fireEditingStopped();
         String id = table.getValueAt(table.getSelectedRow(), 0).toString();
-        EditParticipante view = new EditParticipante(Integer.valueOf(id));
+        PerformSorteio view = new PerformSorteio(Integer.valueOf(id));
         view.setVisible(true);
         view.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }

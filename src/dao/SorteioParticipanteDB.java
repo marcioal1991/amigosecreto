@@ -37,14 +37,16 @@ public class SorteioParticipanteDB {
     
     public ArrayList<SorteioParticipante> selectAllFromSorteio(Sorteio sorteio) {
         String sql = "select SP.*, P.nome, P.email from sorteio_participante as SP"
-                + "inner join participante as P on P.id_participante = SP.id_participante"
-                + "where SP.id_sorteio = ?";
+                + " inner join participante as P on P.id= SP.id_participante"
+                + " where SP.id_sorteio = ?";
         
+        System.out.println(sql);
         PreparedStatement ps;
         ArrayList<SorteioParticipante> sorteios_participantes = new ArrayList<SorteioParticipante>();
         
         try {
              ps = DB.getConnection().prepareStatement(sql);
+             ps.setInt(1, sorteio.getId());
              ResultSet results = ps.executeQuery();
              
              while (results.next()) {

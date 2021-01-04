@@ -40,16 +40,19 @@ public class SorteioParticipanteResultadoDB {
     
     public ArrayList<SorteioParticipanteResultado> selectAllFromSorteio(Sorteio sorteio) {
         String sql = "select SPR.*, P.nome as nome_de, P.email as email_de, P2.nome as nome_para, P2.email as email_para"
-                + "from sorteio_participante_resultado as SPR"
-                + "inner join participante as P on P.id_participante = SPR.id_participante_de"
-                + "inner join participante as P2 on P2.id_participante = SPR.id_participante_para"
-                + "where SPR.id_sorteio = ?";
+                + " from sorteio_participante_resultado as SPR"
+                + " inner join participante as P on P.id = SPR.id_participante_de"
+                + " inner join participante as P2 on P2.id = SPR.id_participante_para"
+                + " where SPR.id_sorteio = ?";
+        
+        System.out.println(sql);
         
         PreparedStatement ps;
         ArrayList<SorteioParticipanteResultado> sorteios_participantes_resultados = new ArrayList<SorteioParticipanteResultado>();
         
         try {
              ps = DB.getConnection().prepareStatement(sql);
+             ps.setInt(1, sorteio.getId());
              ResultSet results = ps.executeQuery();
              
              while (results.next()) {
@@ -82,5 +85,18 @@ public class SorteioParticipanteResultadoDB {
         }
         
         return sorteios_participantes_resultados;
+    }
+    
+    public void deleteAllFromSorteio(Sorteio sorteio) {
+        String sql = "delete from sorteio_participante_resultado where id_sorteio = ?";
+        PreparedStatement ps;
+        
+        try {
+            ps = DB.getConnection().prepareStatement(sql);
+            ps.setInt(1, sorteio.getId());
+            ps.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(SorteioDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

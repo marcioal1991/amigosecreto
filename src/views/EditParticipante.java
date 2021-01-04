@@ -28,10 +28,8 @@ public class EditParticipante extends javax.swing.JFrame {
         initComponents();
         
         this.id = id;
-        System.out.println(id);
         this.db = new ParticipanteDB();
         this.part = db.selectOne(id);
-        System.out.println(this.part.getEmail());
         this.emailTextField.setText(this.part.getEmail());
         this.nomeTextField.setText(this.part.getNome());
         
@@ -132,6 +130,7 @@ public class EditParticipante extends javax.swing.JFrame {
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         this.part.setNome(this.nomeTextField.getText());
         this.part.setEmail(this.emailTextField.getText());
+        
         if (this.id != null) {
             this.db.update(this.part);    
         } else {

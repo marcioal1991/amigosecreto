@@ -12,6 +12,7 @@ import javax.swing.AbstractCellEditor;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.UIManager;
+import javax.swing.WindowConstants;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
@@ -27,11 +28,13 @@ implements TableCellRenderer, TableCellEditor, ActionListener
     JButton renderButton;
     JButton editButton;
     String text;
+    int id;
 
-    public ButtonColumnSorteio(JTable table, int column)
+    public ButtonColumnSorteio(JTable table, int column, int id)
     {
         super();
         this.table = table;
+        this.id = id;
         renderButton = new JButton();
 
         editButton = new JButton();
@@ -62,15 +65,14 @@ implements TableCellRenderer, TableCellEditor, ActionListener
             renderButton.setBackground(UIManager.getColor("Button.background"));
         }
 
-        renderButton.setText( (value == null) ? "" : value.toString() );
+        renderButton.setText("Atualizar");
         return renderButton;
     }
 
     public Component getTableCellEditorComponent(
         JTable table, Object value, boolean isSelected, int row, int column)
     {
-        text = (value == null) ? "" : value.toString();
-        editButton.setText( text );
+        editButton.setText("Atualizar");
         return editButton;
     }
 
@@ -82,6 +84,9 @@ implements TableCellRenderer, TableCellEditor, ActionListener
     public void actionPerformed(ActionEvent e)
     {
         fireEditingStopped();
-        System.out.println( e.getActionCommand() + " : " + table.getSelectedRow());
+        String id = table.getValueAt(table.getSelectedRow(), 0).toString();
+        EditSorteio view = new EditSorteio(Integer.valueOf(id));
+        view.setVisible(true);
+        view.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
 }
