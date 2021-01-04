@@ -14,7 +14,8 @@ create table sorteio (
 
 create table sorteio_participante (
     id int(11) not null primary key  auto_increment,
-    id_participante int(11) not null
+    id_participante int(11) not null,
+    id_sorteio int(11) not null
 );
 
 create table sorteio_participante_resultado
