@@ -8,10 +8,12 @@ package views;
 import dao.SorteioDB;
 import dao.SorteioParticipanteDB;
 import dao.SorteioParticipanteResultadoDB;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Sorteio;
 import model.SorteioParticipanteResultado;
@@ -45,6 +47,12 @@ public class PerformSorteio extends javax.swing.JFrame {
 
     private void fillTable() {
         ArrayList<SorteioParticipanteResultado> list = this.SPRDB.selectAllFromSorteio(this.sorteio);
+        if (list.size() < 3) {
+            JOptionPane.showMessageDialog(this, "Este sorteio possui menos de 3 participantes. Adicione participante para poder sortear.");
+            this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+            return;
+        }
+        
         
         DefaultTableModel model = (DefaultTableModel) this.jTableResultado.getModel();
         
@@ -136,6 +144,13 @@ public class PerformSorteio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonPerformSorteioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPerformSorteioActionPerformed
+        
+        int response = JOptionPane.showConfirmDialog(this, "Ao realizar um novo sorteio, os antigos dados serão deletados");
+        
+        if (response != 0) {
+            JOptionPane.showMessageDialog(this, "O sorteio não foi realizado");
+        }
+        
         this.SPRDB.deleteAllFromSorteio(this.sorteio);
         
         DefaultTableModel model = (DefaultTableModel) this.jTableResultado.getModel();

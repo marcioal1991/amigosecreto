@@ -8,9 +8,13 @@ package views;
 import dao.ParticipanteDB;
 import dao.SorteioDB;
 import dao.SorteioParticipanteDB;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import model.Participante;
 import model.Sorteio;
 
@@ -27,6 +31,7 @@ public class EditSorteio extends javax.swing.JFrame {
     SorteioParticipanteDB spdb = new SorteioParticipanteDB();
     SorteioDB sorteioDB = new SorteioDB();
     Sorteio sorteio;
+    JPanel jPanelParticipantes = new JPanel();
     
     /**
      * Creates new form EditSorteio
@@ -41,7 +46,7 @@ public class EditSorteio extends javax.swing.JFrame {
     }
     
     public EditSorteio() {
-        initComponents();
+        initComponents();        
         this.sorteio = new Sorteio();
         this.addParticipantes();
     }
@@ -50,19 +55,23 @@ public class EditSorteio extends javax.swing.JFrame {
         ParticipanteDB db = new ParticipanteDB();
         ArrayList<Participante> parts = db.selectAll();
         
+        this.jPanelParticipantes.setLayout(new GridLayout(0, 2, 10, 10));
+        
         for (Participante p:parts) {
-            JCheckBox box = new JCheckBox(p.getNome());
+            JCheckBox box = new JCheckBox(p.getNome() + "dsds");
 //            box.setText(p.getNome());
 //            box.setActionCommand(String.valueOf(p.getId()));;
             box.setSelected(this.participantesAtuais.contains(p.getId()));
+            this.add(box);
             box.setVisible(true);
             this.boxes.add(box);
-            this.participantesPanel.add(box);
+            
         }
         
-        this.participantesPanel.setVisible(true);
-        this.participantesPanel.revalidate();
-        this.participantesPanel.repaint();
+        this.add(this.jPanelParticipantes);
+        this.setVisible(true);
+        this.revalidate();
+        this.repaint();
         
     }
 
@@ -78,30 +87,12 @@ public class EditSorteio extends javax.swing.JFrame {
         jPopupMenu1 = new javax.swing.JPopupMenu();
         jLabel1 = new javax.swing.JLabel();
         nomeTextField = new javax.swing.JTextField();
-        participantesPanel = new javax.swing.JPanel();
-        jCheckBox1 = new javax.swing.JCheckBox();
         salvarButton = new javax.swing.JButton();
+        jCheckBox1 = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Nome");
-
-        jCheckBox1.setText("jCheckBox1");
-
-        javax.swing.GroupLayout participantesPanelLayout = new javax.swing.GroupLayout(participantesPanel);
-        participantesPanel.setLayout(participantesPanelLayout);
-        participantesPanelLayout.setHorizontalGroup(
-            participantesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(participantesPanelLayout.createSequentialGroup()
-                .addComponent(jCheckBox1)
-                .addGap(0, 124, Short.MAX_VALUE))
-        );
-        participantesPanelLayout.setVerticalGroup(
-            participantesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, participantesPanelLayout.createSequentialGroup()
-                .addGap(0, 33, Short.MAX_VALUE)
-                .addComponent(jCheckBox1))
-        );
 
         salvarButton.setText("Salvar");
         salvarButton.addActionListener(new java.awt.event.ActionListener() {
@@ -109,6 +100,8 @@ public class EditSorteio extends javax.swing.JFrame {
                 salvarButtonActionPerformed(evt);
             }
         });
+
+        jCheckBox1.setText("jCheckBox1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,10 +114,9 @@ public class EditSorteio extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addGap(28, 28, 28)
                         .addComponent(nomeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(participantesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(salvarButton)))
-                .addContainerGap(446, Short.MAX_VALUE))
+                    .addComponent(salvarButton)
+                    .addComponent(jCheckBox1))
+                .addContainerGap(498, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,9 +125,9 @@ public class EditSorteio extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(nomeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(participantesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addGap(28, 28, 28)
+                .addComponent(jCheckBox1)
+                .addGap(59, 59, 59)
                 .addComponent(salvarButton)
                 .addContainerGap(210, Short.MAX_VALUE))
         );
@@ -144,6 +136,11 @@ public class EditSorteio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void salvarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarButtonActionPerformed
+        if (this.nomeTextField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "O campo nome está em branco!");
+            return;
+        }
+        
         this.sorteio.setNome(this.nomeTextField.getText());
         
         int sorteioId;
@@ -201,7 +198,6 @@ public class EditSorteio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JTextField nomeTextField;
-    private javax.swing.JPanel participantesPanel;
     private javax.swing.JButton salvarButton;
     // End of variables declaration//GEN-END:variables
 }

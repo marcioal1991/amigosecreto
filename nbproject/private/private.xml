@@ -13,10 +13,12 @@
             <file>file:/home/marcio/NetBeansProjects/amigosecreto/src/views/ButtonColumnSorteio.java</file>
             <file>file:/home/marcio/NetBeansProjects/amigosecreto/src/dao/ParticipanteDB.java</file>
             <file>file:/home/marcio/NetBeansProjects/amigosecreto/src/views/ButtonColumnParticipante.java</file>
+            <file>file:/home/marcio/NetBeansProjects/amigosecreto/src/model/SorteioParticipanteResultado.java</file>
             <file>file:/home/marcio/NetBeansProjects/amigosecreto/src/views/ListSorteios.java</file>
             <file>file:/home/marcio/NetBeansProjects/amigosecreto/src/dao/SorteioParticipanteDB.java</file>
             <file>file:/home/marcio/NetBeansProjects/amigosecreto/src/views/EditParticipante.java</file>
             <file>file:/home/marcio/NetBeansProjects/amigosecreto/src/dao/SorteioParticipanteResultadoDB.java</file>
+            <file>file:/home/marcio/NetBeansProjects/amigosecreto/src/dao/DB.java</file>
         </group>
     </open-files>
 </project-private>

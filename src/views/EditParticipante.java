@@ -8,6 +8,9 @@ package views;
 import com.sun.istack.internal.Nullable;
 import dao.ParticipanteDB;
 import java.awt.event.WindowEvent;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 import model.Participante;
 
 /**
@@ -19,6 +22,12 @@ public class EditParticipante extends javax.swing.JFrame {
     private Participante part;
     private ParticipanteDB db;
     private Integer id;
+    
+    private static final String EMAIL_PATTERN = 
+        "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+    private static final Pattern pattern = Pattern.compile(EMAIL_PATTERN, Pattern.CASE_INSENSITIVE);
     
     /**
      * Creates new form EditParticipante
@@ -40,6 +49,11 @@ public class EditParticipante extends javax.swing.JFrame {
         this.db = new ParticipanteDB();
         part = new Participante();     
     }
+    
+    public static boolean validateEmail(String email){
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+     }
     
 
     /**
@@ -128,6 +142,18 @@ public class EditParticipante extends javax.swing.JFrame {
     }//GEN-LAST:event_nomeTextFieldActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        
+        if (this.nomeTextField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "O campo nome está em branco!");
+            return;
+        } else if (this.emailTextField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "O campo Email está em branco!");
+            return;
+        } else if (!validateEmail(this.emailTextField.getText())) {
+            JOptionPane.showMessageDialog(this, "O campo Email é inválido!");
+            return;
+        }
+        
         this.part.setNome(this.nomeTextField.getText());
         this.part.setEmail(this.emailTextField.getText());
         
@@ -136,8 +162,7 @@ public class EditParticipante extends javax.swing.JFrame {
         } else {
             this.db.insert(this.part);    
         }
-        
-        
+
         this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         
         
